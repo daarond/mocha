@@ -1208,6 +1208,23 @@ The following option(s) *only* function in a browser context:
 
 `noHighlighting`: If set to `true`, do not attempt to use syntax highlighting on output test code.
 
+`document`: Use a document object different than where the mocha script is running, like an iframe. Developers still need to set the mocha dev tag and a stylesheet.
+
+```html
+<iframe id="testiframe"></iframe>
+</body>
+</html>
+<script>
+    let framesrc = '<link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />';
+    framesrc += '<body><div id="mocha"></div></body>';
+    $('#testiframe').contents().find('html').html(framesrc);
+	mocha.checkLeaks();
+	mocha.globals(['jQuery']);
+	mocha.options.document = document.getElementById("testiframe").contentDocument;
+	mocha.run();
+</script>
+```
+
 ## `mocha.opts`
 
 Back on the server, Mocha will attempt to load `./test/mocha.opts` as a configuration file of sorts. The lines in this file are combined with any command-line arguments.  The command-line arguments take precedence.  For example, suppose you have the following `mocha.opts` file:
