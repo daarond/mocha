@@ -158,7 +158,7 @@ mocha.run = function (fn) {
   return Mocha.prototype.run.call(mocha, function (err) {
     // The DOM Document is not available in Web Workers.
     var document = global.document;
-    if (document && document.getElementById('mocha') && options.noHighlighting !== true) {
+    if (getMochaDocument() && getMochaDocument().getElementById('mocha') && options.noHighlighting !== true) {
       Mocha.utils.highlightTags('code');
     }
     if (fn) {
